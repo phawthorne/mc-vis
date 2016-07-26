@@ -1,18 +1,18 @@
 (function (mcviz) {
-	'use strict';
+    'use strict';
 
 
-	queue()
-		.defer(d3.json, "static/data/"+mcviz.watershed+"/n_frontier.json")
-		.await(ready);
+    queue()
+        .defer(d3.json, "static/data/"+mcviz.watershed+"/n_frontier.json")
+        .await(ready);
 
-	function ready(error, frontierData) {
-		if(error) {
-			return console.warn(error);
-		}
+    function ready(error, frontierData) {
+        if(error) {
+            return console.warn(error);
+        }
 
-		mcviz.data.frontierData = frontierData;
-		mcviz.initMenu();
-		mcviz.onDataChange();
-	}
+        mcviz.data.frontierData = frontierData;
+        mcviz.initMenu();
+        mcviz.onDataChange();
+    }
 }(window.mcviz = window.mcviz || {}));
