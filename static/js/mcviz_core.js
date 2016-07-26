@@ -7,7 +7,8 @@
 	mcviz.activePoint = 0;
 	mcviz.VALUES = ['nreduc', 'preduc', 'sreduc'];
 	mcviz.LULC_NAMES = ['AllCrop','CC','CT','Forest','GrW','NT',
-					    'NTCC','Prairie','RF','RFCC','RFNT','RFNTCC']
+					    'NTCC','Prairie','RF','RFCC','RFNT','RFNTCC'];
+	mcviz.watershed = 'middle_cedar';
 	mcviz.LULC_COLORS = {
 		AllCrop:'yellow',
 		Developed:'grey',

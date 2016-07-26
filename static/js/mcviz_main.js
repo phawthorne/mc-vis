@@ -3,7 +3,7 @@
 
 
 	queue()
-		.defer(d3.json, "static/data/n_frontier.json")
+		.defer(d3.json, "static/data/"+mcviz.watershed+"/n_frontier.json")
 		.await(ready);
 
 	function ready(error, frontierData) {

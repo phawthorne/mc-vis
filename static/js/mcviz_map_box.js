@@ -9,7 +9,7 @@
 		.attr('width', mcviz.mapWidth);
 
 	mcviz.updateMap = function(ptnum) {
-		var imgPath = 'static/data/maps/landscape_'+ptnum+'.png';
+		var imgPath = 'static/data/'+mcviz.watershed+'/maps/landscape_'+ptnum+'.png';
 		imgTag.attr('src', imgPath);
 	};
 
