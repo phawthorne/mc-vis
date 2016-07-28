@@ -4,7 +4,7 @@
 
     var chartHolder = d3.select('#frontier-plot');
 
-    var margin = {top:20, right:20, bottom:30, left:30};
+    var margin = {top:20, right:20, bottom:40, left:50};
     var boundingRect = chartHolder.node()
         .getBoundingClientRect();
     var width = boundingRect.width - margin.left - margin.right;
@@ -31,7 +31,7 @@
                     .orient('left')
                     .ticks(5)
                     .tickFormat(function(d) {
-                        return d;
+                        return (-1*d)*100 +'%';
                     });
 
     var svg = chartHolder.append('svg')
@@ -45,6 +45,19 @@
             .attr('transform', 'translate(0,'+height+')');
     svg.append('g')
             .attr('class', 'y axis');
+    svg.append('text')
+        .attr('x', width / 2 )
+        .attr('y',  height + .8*margin.bottom)
+        .style('text-anchor', 'middle')
+        .text('Cost (million $)');
+    svg.append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', 0-margin.left)
+        .attr('x', 0-(height / 2))
+        .attr('dy', '1em')
+        .style('text-anchor', 'middle')
+        .text('Reduction');
+
 
 
     mcviz.updateFrontierPlot = function(data) {
