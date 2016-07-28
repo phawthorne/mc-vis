@@ -30,6 +30,7 @@
         rows.enter().append('tr');
         rows.exit().remove();
 
+        // make sure we have the columns all set up
         var columns = table_holder.selectAll('tr')
             .selectAll('td')
             .data(function(d) {
@@ -38,9 +39,7 @@
         columns.enter().append("td");
         columns.exit().remove();
 
-        // table_holder.selectAll('td')
-        //     .text(function(d){return d;});
-
+        // go through data cells setting text and styles
         table_holder.selectAll('tr')
             .selectAll('td')
             .each(function (d, i) {
@@ -54,19 +53,6 @@
                         .text(function(d){return d;});
                 }
             });
-
-        // // create a cell in each row for each column
-        // var cells = rows.selectAll("td")
-        //     .data(function(row) {
-        //         return columns.map(function(column) {
-        //             return {column: column, value: row[column]};
-        //         });
-        //     })
-        //     .enter()
-        //     .append("td")
-        //     .attr("style", "font-family: Courier") // sets the font style
-        //         .html(function(d) { return d.value; });
-
 
 
 
