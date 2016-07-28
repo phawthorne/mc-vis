@@ -2,27 +2,16 @@
 (function (mcviz) {
     'use strict';
 
-    console.log('building point-report table');
-
     var table_holder = d3.select('#point-report')
         .append('table')
             .attr('align', 'center');
 
-    // var row = table_holder.append('tbody')
-    //  .append('tr')
-    // row.append('td')
-    //     .attr('class', 'label')
-    //     .html('testing');
-    // row.append('td')
-    //     .html('1234');
-
-    mcviz.updatePointReport = function(data, keys, labels) {
+    mcviz.updatePointReport = function(data, keys, labels, fmts) {
 
         var prData = [];
         for (var i in keys) {
             prData[i] = {label:labels[i], value:data[keys[i]]};
         }
-        console.log(prData);
 
         // bind the data to rows and make sure we have the right number
         var rows = table_holder.selectAll("tr")
@@ -43,14 +32,25 @@
         table_holder.selectAll('tr')
             .selectAll('td')
             .each(function (d, i) {
+                var item = d3.select(this);
+
                 if (i==0) {
-                    d3.select(this)
-                        .attr('class', 'label')
-                        .text(function(d){return d;});
+                    // This is the label column
+                    item.attr('class', 'label')
+                        .text(d);
                 }
                 else {
-                    d3.select(this)
-                        .text(function(d){return d;});
+                    // This is the data column
+                    item.text(function(d) {
+                        var j = prData.findIndex(
+                            function(o) {
+                                return o['value']==d;
+                            });
+                        var fmt = fmts[j];
+                        var n = fmt['roundingFunc'](fmt['mult']*d)
+                        return fmt['prefix'] + n + fmt['suffix'];
+                    });
+
                 }
             });
 
