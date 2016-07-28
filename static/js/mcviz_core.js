@@ -30,6 +30,19 @@
     };
     mcviz.TABLE_VALUE_LABELS = ['Cost', 'N reduction', 'P reduction', 'S reduction'];
     mcviz.TABLE_VALUE_KEYS = ['cost', 'nreduc', 'preduc', 'sreduc'];
+    var millions_format = {'mult':1e-6,
+                           'prefix':'$',
+                           'suffix':' Million',
+                           'roundingFunc': function(n) {
+                                return n.toFixed(2);}
+                           };
+    var pct_format = {     'mult':1e2,
+                           'prefix':'',
+                           'suffix':'%',
+                           'roundingFunc': function(n) {
+                                return Math.abs(n.toPrecision(3));}
+                     };
+    mcviz.TABLE_FORMATS = [millions_format, pct_format, pct_format, pct_format];
     mcviz.mapWidth = 650;
     mcviz.mapHeight = 350;
 
@@ -97,7 +110,8 @@
 
         data = mcviz.getPointReportData();
         mcviz.updatePointReport(data, mcviz.TABLE_VALUE_KEYS, 
-                                mcviz.TABLE_VALUE_LABELS);
+                                mcviz.TABLE_VALUE_LABELS,
+                                mcviz.TABLE_FORMATS);
     }
 
 
