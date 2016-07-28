@@ -50,12 +50,12 @@ a:hover {
 }
 
 .fdot {
-	fill: rebeccapurple;
-	r: 5;
+	fill: black;
+	r: 3.5;
 }
 .fdot.active {
 	fill: red;
-	r: 6;
+	r: 5;
 }
 
 .axis { font: 10px sans-serif; }
