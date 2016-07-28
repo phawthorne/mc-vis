@@ -28,6 +28,8 @@
         CT:'tomato',
         Water:'royalblue'
     };
+    mcviz.TABLE_VALUE_LABELS = ['Cost', 'N reduction', 'P reduction', 'S reduction'];
+    mcviz.TABLE_VALUE_KEYS = ['cost', 'nreduc', 'preduc', 'sreduc'];
     mcviz.mapWidth = 650;
     mcviz.mapHeight = 350;
 
@@ -71,6 +73,13 @@
         return data;
     }
 
+    mcviz.getPointReportData = function() {
+        var data = mcviz.data.frontierData.find(function(d) {
+                    return d['solution']==mcviz.activePoint;
+        });
+        return data;
+    }
+
     mcviz.onDataChange = function() {
         // var data = mcviz.getValueData();
         // mcviz.updateBarChart(data);
@@ -85,6 +94,10 @@
 
         var data = mcviz.getPieData();
         mcviz.updatePiePlot(data, mcviz.LULC_NAMES, mcviz.LULC_COLORS);
+
+        data = mcviz.getPointReportData();
+        mcviz.updatePointReport(data, mcviz.TABLE_VALUE_KEYS, 
+                                mcviz.TABLE_VALUE_LABELS);
     }
 
 
