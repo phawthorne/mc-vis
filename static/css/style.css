@@ -72,6 +72,8 @@ a:hover {
 	width: 400px;
 }
 
+td.label {font-weight: bold;}
+
 #map-box {
 	top:350px;
 	height: 350px;
