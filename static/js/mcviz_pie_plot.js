@@ -11,8 +11,6 @@
     var height = boundingRect.height - margin.top - margin.bottom;
     var radius = Math.min(width, height) / 2;
 
-    console.log('radius: '+radius);
-
     var arc = d3.svg.arc()
         .outerRadius(radius-10)
         .innerRadius(0);
