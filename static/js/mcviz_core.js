@@ -15,7 +15,13 @@
             title:'Middle Cedar: Optimized for N Reduction with >= 10% Prairie'},
         {   menu_name:'Wolf Creek: Nitrogen',
             dirname:'wolf_creek_n',
-            title: 'Wolf Creek: Optimized for N Reduction'}
+            title: 'Wolf Creek: Optimized for N Reduction'},
+        {   menu_name:'Wolf Creek: Phosphorus',
+            dirname:'wolf_creek_p',
+            title: 'Wolf Creek: Optimized for P Reduction'},
+        {   menu_name:'Wolf Creek: Sediment',
+            dirname:'wolf_creek_s',
+            title: 'Wolf Creek: Optimized for S Reduction'}
     ];
     mcviz.activeFrontier = 0;
 
