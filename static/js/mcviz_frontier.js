@@ -62,12 +62,12 @@
 
     mcviz.updateFrontierPlot = function(data) {
         var xrange = {
-            min: d3.min(data, o=>o['xval']),
-            max: d3.max(data, o=>o['xval'])
+            min: d3.min(data, function(o) {return o['xval'];}),
+            max: d3.max(data, function(o) {return o['xval'];})
         };
         var yrange = {
-            min: d3.min(data, o=>o['yval']),
-            max: d3.max(data, o=>o['yval'])
+            min: d3.min(data, function(o) {return o['yval'];}),
+            max: d3.max(data, function(o) {return o['yval'];})
         };
 
         xScale.domain([xrange.min, xrange.max]);
@@ -90,6 +90,7 @@
             .append('circle')
             .attr('pt', function(d, i){ return i;})
             .attr('class', 'fdot')
+            .attr('r', 3.5)
             .on('click', function(){
                 dots.attr('class', 'fdot');
                 d3.select(this)
