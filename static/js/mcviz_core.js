@@ -7,8 +7,12 @@
     mcviz.activePoint = 0;
 
     mcviz.FRONTIERS = [
-        {display:'Middle Cedar: Nitrogen', dirname:'middle_cedar_n'},
-        {display:'Wolf Creek: Nitrogen', dirname:'wolf_creek_n'}
+        {   menu_name:'Middle Cedar: Nitrogen',
+            dirname:'middle_cedar_n',
+            title:'Middle Cedar: Optimized for N Reduction'},
+        {   menu_name:'Wolf Creek: Nitrogen',
+            dirname:'wolf_creek_n',
+            title: 'Wolf Creek: Optimized for N Reduction'}
     ];
     mcviz.activeFrontier = 0;
 
@@ -84,6 +88,9 @@
 
             mcviz.data.frontierData = frontierData;
             mcviz.onDataChange();
+            console.log(mcviz.FRONTIERS[mcviz.activeFrontier]['title']);
+            d3.select('#data-title')
+                .html(mcviz.FRONTIERS[mcviz.activeFrontier]['title']);
         }
 
     }
