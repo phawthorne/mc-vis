@@ -16,7 +16,7 @@ a:hover {
 
 #mcviz {
 	position: absolute;
-	top: 50px;
+	top: 75px;
 	width: 100%;
 }
 
@@ -24,7 +24,7 @@ a:hover {
 	position: absolute;
 	font-size: 30px;
 	font-weight: 100;
-	top: 20px;
+	top: 10px;
 }
 
 #chart-holder {
