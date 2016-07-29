@@ -96,6 +96,23 @@
     }
 
     mcviz.initMenu = function() {
+        // Configure the frontier-selection menu
+        var frontierSelect = d3.select('#data-choice select');
+        frontierSelect.selectAll('option')
+            .data(mcviz.FRONTIERS).enter()
+            .append('option')
+            .attr('value', function(d, i) { return i; })
+            .html(function(d) { return d['menu_name']; });
+        frontierSelect.on('change', function(d) {
+            // var f = mcviz.FRONTIERS[d3.select(this).property('value')];
+            mcviz.activeFrontier = d3.select(this).property('value');
+            mcviz.setResults();
+            mcviz.onDataChange();
+            mcviz.newPointSelected();
+
+        });
+        // mcviz.activeValue = mcviz.VALUES[0]['code'];
+
         // Configures the value-selection menu dropdown
         var valSelect = d3.select('#value-select select');
         valSelect.selectAll('option')
@@ -104,6 +121,7 @@
             .attr('value', function(d) { return d['code']; })
             .html(function(d) { return d['display']; });
         valSelect.on('change', function(d) {
+            console.log(this);
             var value = d3.select(this).property('value');
             mcviz.activeValue = value;
             mcviz.onDataChange();
