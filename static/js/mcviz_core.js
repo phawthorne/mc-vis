@@ -8,6 +8,20 @@
     mcviz.VALUES = ['nreduc', 'preduc', 'sreduc'];
     mcviz.LULC_NAMES = ['AllCrop','CC','CT','Forest','GrW','NT',
                         'NTCC','Prairie','RF','RFCC','RFNT','RFNTCC'];
+    mcviz.LULC_FULL_NAMES = [
+        'Conventional',
+        'Cover Crop',
+        'Conservation Till',
+        'Forest',
+        'Grassed Waterways',
+        'No Till',
+        'No Till + Cover Crop',
+        'Prairie',
+        'Reduced Fertilizer',
+        'Red Fert + Cover Crop',
+        'Red Fert + No Till',
+        'Red Fert + No Till + Cover Crop'
+    ]
     mcviz.watershed = 'middle_cedar';
     mcviz.LULC_COLORS = {
         AllCrop:'yellow',
@@ -65,7 +79,9 @@
 
     mcviz.getValueData = function(){
         var value = mcviz.activeValue;
-        var data = mcviz.data.frontierData.map(o => o[value]);
+        var data = mcviz.data.frontierData.map(function(o){ 
+                                    return o[value]
+                                });
         return data;
     };
 

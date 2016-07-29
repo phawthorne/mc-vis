@@ -27,15 +27,34 @@
             .attr("transform",  
                 "translate(" + (margin.left + width/2) + "," + (margin.top + height/2) + ")");
 
-    mcviz.updatePiePlot = function(data, fields, colors) {
-        var pieData = fields.map( n => data[n]+1 );
+    // construct the tooltip div
+    var tooltip = d3.select('body')
+        .append('div')
+        .style('position', 'absolute')
+        .style('z-index', '10')
+        .style('visibility', 'hidden')
+        .text('tooltip');
 
+    mcviz.updatePiePlot = function(data, fields, colors) {
+        var pieData = fields.map( function(n) { return data[n]} );
+        var totArea = d3.sum(pieData);
         var slices = svg.selectAll('path')
-            .data(pie(pieData));
+            .data(pie(pieData));            
 
         slices.enter()
             .append('path')
             .style('fill', function(d,i) { return colors[fields[i]]; })
+            .attr('class', 'pie-slice')
+            .on("mouseover", function(d, i){
+                // console.log(d, i);
+                var pctVal = (100*d['value']/totArea).toPrecision(3);
+                tooltip.html(mcviz.LULC_FULL_NAMES[i] + '<br />' +
+                    d['value'].toFixed(0) + ' ha <br />' +
+                    pctVal + '%');
+                return tooltip.style("visibility", "visible");
+            })
+            .on("mousemove", function(){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+            .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
             .each(function(d) { this._current = d; });
 
         slices.exit().remove();

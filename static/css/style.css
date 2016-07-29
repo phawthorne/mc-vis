@@ -88,3 +88,8 @@ td.label {font-weight: bold;}
 	width: 350px;
 
 }
+
+.pie-slice {
+	stroke: #fefefe;
+	stroke-width: 0.5;
+}
