@@ -5,7 +5,17 @@
     mcviz.data = {}; // our main data object
     mcviz.activeValue = null;
     mcviz.activePoint = 0;
-    mcviz.VALUES = ['nreduc', 'preduc', 'sreduc'];
+
+    mcviz.FRONTIERS = [
+        {display:'Middle Cedar: Nitrogen', dirname:'middle_cedar_n'},
+        {display:'Wolf Creek: Nitrogen', dirname:'wolf_creek_n'}
+    ];
+    mcviz.activeFrontier = 0;
+
+    mcviz.VALUES = [
+        {code:'nreduc', display:'Nitrogen'},
+        {code:'preduc', display:'Phosphorus'},
+        {code:'sreduc', display:'Sediment'}];
     mcviz.LULC_NAMES = ['AllCrop','CC','CT','Forest','GrW','NT',
                         'NTCC','Prairie','RF','RFCC','RFNT','RFNTCC'];
     mcviz.LULC_FULL_NAMES = [
@@ -60,20 +70,38 @@
     mcviz.mapWidth = 650;
     mcviz.mapHeight = 350;
 
+    mcviz.setResults = function() {
+        queue()
+            .defer(d3.json, "static/data/"+
+                mcviz.FRONTIERS[mcviz.activeFrontier]['dirname']+
+                "/frontier.json")
+            .await(ready);
+
+        function ready(error, frontierData) {
+            if(error) {
+                return console.warn(error);
+            }
+
+            mcviz.data.frontierData = frontierData;
+            mcviz.onDataChange();
+        }
+
+    }
+
     mcviz.initMenu = function() {
         // Configures the value-selection menu dropdown
         var valSelect = d3.select('#value-select select');
         valSelect.selectAll('option')
             .data(mcviz.VALUES).enter()
             .append('option')
-            .attr('value', function(d) { return d; })
-            .html(function(d) { return d; });
+            .attr('value', function(d) { return d['code']; })
+            .html(function(d) { return d['display']; });
         valSelect.on('change', function(d) {
             var value = d3.select(this).property('value');
             mcviz.activeValue = value;
             mcviz.onDataChange();
         });
-        mcviz.activeValue = mcviz.VALUES[0];
+        mcviz.activeValue = mcviz.VALUES[0]['code'];
 
     };
 
@@ -131,4 +159,4 @@
     }
 
 
-}(window.mcviz = window.mcviz || {}));
+}(window.mcviz = window.mcviz || {}));''
