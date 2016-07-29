@@ -46,8 +46,8 @@
             .style('fill', function(d,i) { return colors[fields[i]]; })
             .attr('class', 'pie-slice')
             .on("mouseover", function(d, i){
-                // console.log(d, i);
-                var pctVal = (100*d['value']/totArea).toPrecision(3);
+                var pctVal = (100*(d['endAngle']-d['startAngle'])/
+                              (2*Math.PI)).toPrecision(3);
                 tooltip.html(mcviz.LULC_FULL_NAMES[i] + '<br />' +
                     d['value'].toFixed(0) + ' ha <br />' +
                     pctVal + '%');
