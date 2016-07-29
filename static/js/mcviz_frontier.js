@@ -62,12 +62,14 @@
 
     mcviz.updateFrontierPlot = function(data) {
         var xrange = {
-            min: d3.min(data, function(o) {return o['xval'];}),
+            // min: d3.min(data, function(o) {return o['xval'];}),
+            min: 0,
             max: d3.max(data, function(o) {return o['xval'];})
         };
         var yrange = {
             min: d3.min(data, function(o) {return o['yval'];}),
-            max: d3.max(data, function(o) {return o['yval'];})
+            // max: d3.max(data, function(o) {return o['yval'];})
+            max:0
         };
 
         xScale.domain([xrange.min, xrange.max]);
