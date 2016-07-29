@@ -26,6 +26,11 @@
             .attr('class', 'pie')
             .attr("transform",  
                 "translate(" + (margin.left + width/2) + "," + (margin.top + height/2) + ")");
+    svg.append('text')
+        .attr('x', 0)
+        .attr('y', -height/2)
+        .style('text-anchor', 'middle')
+        .text('Management composition');
 
     // construct the tooltip div
     var tooltip = d3.select('body')
