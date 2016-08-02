@@ -27,6 +27,12 @@ a:hover {
 	top: 10px;
 }
 
+#doc-link {
+	position:absolute;
+	top:0px;
+	right:0px;
+}
+
 #chart-holder {
 	width: 1000px;
 	height: 700px;
@@ -93,3 +99,6 @@ td.label {font-weight: bold;}
 	stroke: #fefefe;
 	stroke-width: 0.5;
 }
+
+
+
