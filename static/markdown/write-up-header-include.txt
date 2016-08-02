@@ -1,0 +1,4 @@
+  <link rel="stylesheet" type="text/css" href="../css/write-up-style.css">
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "all"} } });
+  </script>

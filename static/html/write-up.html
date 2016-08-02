@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../css/write-up-style.css">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "all"} } });
+    </script>
+</head>
+<body>
+<h1 id="middle-cedar-optimization-write-up">Middle Cedar optimization write-up</h1>
+<h2 id="input-data">1) Input Data</h2>
+<p>The input data to the optimization is a series of tables capturing output from SWAT models. For each of the potential management options, we have a table containing the value to each potential objective for each HRU</p>
+<p>Example table:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">HRU</th>
+<th align="right">Cost</th>
+<th align="right">N reduction</th>
+<th align="right">P reduction</th>
+<th align="right">Carbon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">100</td>
+<td align="right">2.3</td>
+<td align="right">1.2</td>
+<td align="right">2.0</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">120</td>
+<td align="right">5.2</td>
+<td align="right">2.9</td>
+<td align="right">0.3</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">53</td>
+<td align="right">0.5</td>
+<td align="right">3.5</td>
+<td align="right">3.7</td>
+</tr>
+</tbody>
+</table>
+<p>In this case, these parameters are relative values, measuring potential change from conventional agriculture (the assumed current land-use). So <code>cost</code> is the net loss of farm-level profit, and <code>N reduction</code> is the difference in nitrogen leaching between baseline and the alternative management.</p>
+<p>We can also include absolute (non-relative) values of any variable when that is more relevant to the desired analysis</p>
+<p>Most of these data are on per hectare, so we also include area of each HRU.</p>
+<h2 id="optimization">2) Optimization</h2>
+<p>We have two ways of running the optimization: to generate a particular solution (like the least-cost way of hitting the reduction targets), or to generate a trade-off curve that shows the general reduction vs cost pattern. Both of these use the same programmatic back-end to take the SWAT data and the requirements for the solution and generate optimized results.</p>
+<p>There are three main optimization problem formulations we use to do these analyses. Note that in all cases, there is a binary objective constraint that's used to model the discrete choice of which management.</p>
+<h3 id="notation">Notation</h3>
+<ul>
+<li><p><span class="math inline">\(\vec{x}\)</span>: a vector of 0 or 1 values that specify what management is assigned to each HRU. It consists of values <span class="math inline">\(x_{hl}\)</span> which specify if HRU <span class="math inline">\(h\)</span> is given management <span class="math inline">\(l\)</span>.</p></li>
+<li><p><span class="math inline">\(w_i\)</span>: a weight assigned to objective <span class="math inline">\(i\)</span>. This value gives the importance of the objective in a given optimization run.</p></li>
+<li><p><span class="math inline">\(N\)</span>: the number of objectives in the optimization.</p></li>
+<li><p><span class="math inline">\(V_i\)</span>: the value matrix giving the values to service <span class="math inline">\(i\)</span> for each possible <span class="math inline">\(x_{hl}\)</span>.</p></li>
+<li><p><span class="math inline">\(C\)</span>: the costs (opportunity and direct) of each possible <span class="math inline">\(x_{hl}\)</span>.</p></li>
+<li><p><span class="math inline">\(L_{j}\)</span>: Loading of a pollutant <span class="math inline">\(j\)</span>, either nitrogen, phosphorus, or sediment, under each possible <span class="math inline">\(x_{hl}\)</span>.</p></li>
+</ul>
+<h3 id="weighted-multi-objective-formulation">Weighted multi-objective formulation</h3>
+<p>In this case we maximize the weighted sum of different objective values. This formulation is used primarily to construct the frontiers, since it doesn't guarantee any particular values for the individual objectives.</p>
+<p><span class="math display">\[
+\max_{\vec{x}} \sum_{i=1}^{N} w_i V_i \vec{x}
+\]</span></p>
+<h3 id="least-cost-target-hitting">Least-cost target hitting</h3>
+<p>In this formulation, we set a constraint that a given solution must reduce N, P, or S loading by a certain amount <span class="math inline">\(T\)</span>, and that the objective is to do so at the least cost.</p>
+<p><span class="math display">\[
+\begin{align}
+\min_{\vec{x}} &amp; C \vec{x} \\
+\mathrm{s.t. }\ &amp; L_{j} \vec{x} \lt T
+\end{align}
+\]</span></p>
+<h3 id="minimize-loading-for-a-given-budget">Minimize loading for a given budget</h3>
+<p>In this formulation, we fix a maximum cost, <span class="math inline">\(B\)</span>, and find the landscape that minimizes loading for N, P, or S:</p>
+<p><span class="math display">\[
+\begin{align}
+\min_{\vec{x}} &amp; L_{j} \vec{x} \\
+\mathrm{s.t. }\ &amp; C \vec{x} \lt B
+\end{align}
+\]</span></p>
+<h3 id="additional-optional-constraints">Additional optional constraints</h3>
+<ol style="list-style-type: decimal">
+<li>Excluded managment options. If desired, we can specify management options to ignore at the HRU level.</li>
+<li>Fixed managment options. We can lock in management for a given HRU. In our main analyses we locked in all non-crop HRUs from the baseline scenario, preventing change outside the current crop footprint</li>
+<li>Target areas by management option. The model can accept min or max areas for each management type. This could be useful in case a certain habitat area (prairie or forest) is desired for conservation reasons.</li>
+</ol>
+<p>Each of these additional constraints further specifies the analysis using one of the main methods.</p>
+</body>
+</html>

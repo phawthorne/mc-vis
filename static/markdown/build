@@ -1,0 +1,1 @@
+pandoc write-up.md -s --mathjax -o ../html/write-up.html -H write-up-header-include.txt
