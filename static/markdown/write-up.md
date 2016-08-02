@@ -24,6 +24,8 @@ Most of these data are on per hectare, so we also include area of each HRU.
 
 We have two ways of running the optimization: to generate a particular solution (like the least-cost way of hitting the reduction targets), or to generate a trade-off curve that shows the general reduction vs cost pattern. Both of these use the same programmatic back-end to take the SWAT data and the requirements for the solution and generate optimized results.
 
+A solution to an optimization problem is a vector $\vec{x}$ that specifies which management option is assigned to each HRU. 
+
 There are three main optimization problem formulations we use to do these analyses. Note that in all cases, there is a binary objective constraint that's used to model the discrete choice of which management. 
 
 ### Notation
