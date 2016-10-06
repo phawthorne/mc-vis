@@ -10,7 +10,7 @@
         {   menu_name:'Middle Cedar: Nitrogen',
             dirname:'middle_cedar_n',
             title:'Middle Cedar: Optimized for N Reduction'},
-        {   menu_name:'Middle Cedar: Nitrogen + 10% Priarie',
+        {   menu_name:'Middle Cedar: Nitrogen + 10% Prairie',
             dirname:'middle_cedar_n_10pct_prairie',
             title:'Middle Cedar: Optimized for N Reduction with >= 10% Prairie'},
         {   menu_name:'Wolf Creek: Nitrogen',
