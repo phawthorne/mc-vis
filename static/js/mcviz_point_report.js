@@ -15,7 +15,7 @@
 
         // bind the data to rows and make sure we have the right number
         var rows = table_holder.selectAll("tr")
-            .data(prData)
+            .data(prData);
         rows.enter().append('tr');
         rows.exit().remove();
 
@@ -44,10 +44,10 @@
                     item.text(function(d) {
                         var j = prData.findIndex(
                             function(o) {
-                                return o['value']==d;
+                                return o['value'] == d;
                             });
                         var fmt = fmts[j];
-                        var n = fmt['roundingFunc'](fmt['mult']*d)
+                        var n = fmt['roundingFunc'](fmt['mult']*d);
                         return fmt['prefix'] + n + fmt['suffix'];
                     });
 

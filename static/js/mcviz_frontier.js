@@ -49,7 +49,7 @@
         .attr('x', width / 2 )
         .attr('y',  height + .8*margin.bottom)
         .style('text-anchor', 'middle')
-        .text('Cost (million $)');
+        .text('Cost (million $/yr)');
     svg.append('text')
         .attr('transform', 'rotate(-90)')
         .attr('y', 0-margin.left)
@@ -79,11 +79,11 @@
 
         svg.select('.x.axis')
             .transition().duration(300)
-            .call(xAxis)
+            .call(xAxis);
 
         svg.select('.y.axis')
             .transition().duration(300)
-            .call(yAxis)
+            .call(yAxis);
 
         var dots = svg.selectAll('.fdot')
                 .data(data, function(d, i) {return i});

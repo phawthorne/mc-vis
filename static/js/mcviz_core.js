@@ -7,12 +7,6 @@
     mcviz.activePoint = 0;
 
     mcviz.FRONTIERS = [
-        {   menu_name:'Middle Cedar: Nitrogen',
-            dirname:'middle_cedar_n',
-            title:'Middle Cedar: Optimized for N Reduction'},
-        {   menu_name:'Middle Cedar: Nitrogen + 10% Prairie',
-            dirname:'middle_cedar_n_10pct_prairie',
-            title:'Middle Cedar: Optimized for N Reduction with >= 10% Prairie'},
         {   menu_name:'Wolf Creek: Nitrogen',
             dirname:'wolf_creek_n',
             title: 'Wolf Creek: Optimized for N Reduction'},
@@ -21,7 +15,13 @@
             title: 'Wolf Creek: Optimized for P Reduction'},
         {   menu_name:'Wolf Creek: Sediment',
             dirname:'wolf_creek_s',
-            title: 'Wolf Creek: Optimized for S Reduction'}
+            title: 'Wolf Creek: Optimized for S Reduction'},
+        {   menu_name:'Middle Cedar: Nitrogen',
+            dirname:'middle_cedar_n',
+            title:'Middle Cedar: Optimized for N Reduction'},
+        {   menu_name:'Middle Cedar: Nitrogen + 10% Prairie',
+            dirname:'middle_cedar_n_10pct_prairie',
+            title:'Middle Cedar: Optimized for N Reduction with >= 10% Prairie'},
     ];
     mcviz.activeFrontier = 0;
 
@@ -44,7 +44,7 @@
         'Red Fert + Cover Crop',
         'Red Fert + No Till',
         'Red Fert + No Till + Cover Crop'
-    ]
+    ];
     mcviz.watershed = 'middle_cedar';
     mcviz.LULC_COLORS = {
         AllCrop:'yellow',
@@ -65,7 +65,7 @@
         CT:'tomato',
         Water:'royalblue'
     };
-    mcviz.TABLE_VALUE_LABELS = ['Cost', 'N reduction', 'P reduction', 'S reduction'];
+    mcviz.TABLE_VALUE_LABELS = ['Annual cost', 'N reduction', 'P reduction', 'S reduction'];
     mcviz.TABLE_VALUE_KEYS = ['cost', 'nreduc', 'preduc', 'sreduc'];
     var millions_format = {'mult':1e-6,
                            'prefix':'$',
@@ -102,7 +102,7 @@
                 .html(mcviz.FRONTIERS[mcviz.activeFrontier]['title']);
         }
 
-    }
+    };
 
     mcviz.initMenu = function() {
         // Configure the frontier-selection menu
@@ -162,14 +162,14 @@
                     return d['solution']==mcviz.activePoint;
         });
         return data;
-    }
+    };
 
     mcviz.getPointReportData = function() {
         var data = mcviz.data.frontierData.find(function(d) {
                     return d['solution']==mcviz.activePoint;
         });
         return data;
-    }
+    };
 
     mcviz.onDataChange = function() {
         // var data = mcviz.getValueData();
@@ -193,4 +193,4 @@
     }
 
 
-}(window.mcviz = window.mcviz || {}));''
+}(window.mcviz = window.mcviz || {}));
